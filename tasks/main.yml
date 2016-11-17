@@ -1,0 +1,10 @@
+---
+- name: set firewall-zones
+  include: set_firewall_zone.yml
+  vars:
+    name: "{{item.name}}"
+    network: "{{item.network}}"
+    forward: "{{item.forward | default({})}}"
+    input: "{{item.input | default({})}}"
+    output: "{{item.output | default({})}}"
+  with_items: "{{firewall_zones}}"
