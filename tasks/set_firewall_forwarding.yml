@@ -1,0 +1,24 @@
+---
+- name: set firewall-zone src
+  uci:
+    command: set
+    config: "firewall"
+    index: "{{index}}"
+    option: "src"
+    type: "forwarding"
+    value: "{{src}}"
+  notify:
+    - uci commit firewall
+    - reload network for openwrt-firewall
+
+- name: set firewall-zone dest
+  uci:
+    command: set
+    config: "firewall"
+    index: "{{index}}"
+    option: "dest"
+    type: "forwarding"
+    value: "{{dest}}"
+  notify:
+    - uci commit firewall
+    - reload network for openwrt-firewall

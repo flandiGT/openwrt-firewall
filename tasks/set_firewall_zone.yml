@@ -54,10 +54,23 @@
     command: set
     config: "firewall"
     section: "{{name}}"
-    option: "input"
+    option: "output"
     type: "zone"
     value: "{{output}}"
   when: output != {}
+  notify:
+    - uci commit firewall
+    - reload network for openwrt-firewall
+
+- name: set firewall-zone output
+  uci:
+    command: set
+    config: "firewall"
+    section: "{{name}}"
+    option: "masq"
+    type: "zone"
+    value: "{{masq | int}}"
+  when: masq != {}
   notify:
     - uci commit firewall
     - reload network for openwrt-firewall

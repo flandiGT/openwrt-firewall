@@ -7,4 +7,13 @@
     forward: "{{item.forward | default({})}}"
     input: "{{item.input | default({})}}"
     output: "{{item.output | default({})}}"
-  with_items: "{{firewall_zones}}"
+    masq: "{{item.masq | default({})}}"
+  with_items: "{{zones}}"
+
+- name: set firewall-forwardings
+  include: set_firewall_forwarding.yml
+  vars:
+    index: "{{item.0}}"
+    src: "{{item.1.src}}"
+    dest: "{{item.1.dest}}"
+  with_indexed_items: "{{forwardings}}"
