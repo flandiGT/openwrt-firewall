@@ -11,6 +11,7 @@ Role Variables
 |-------------------|------------------|----------------------|---------|
 | zones             | array of objects | see attributes below | <empty> |
 | forwardings       | array of objects | see attributes below | <empty> |
+| redirects         | array of objects | see attributes below | <empty> |
 
 Role Variable elements
 ----------------------
@@ -30,9 +31,21 @@ firewall-forwarding attributes:
 
 | attribute name | property type       | valid values / examples            |
 |----------------|---------------------|------------------------------------|
-| name           | text                | zone name like 'guest_forwarding ' |
-| src            | text                | source network name                |
-| dest           | text                | destination network name           |
+| src            | network as text     | source network name                |
+| dest           | network as text     | destination network name           |
+
+firewall-redirect attributes
+
+| attribute name | property type       | valid values / examples                     |
+|----------------|---------------------|---------------------------------------------|
+| name           | text                | redirect role name like 'ssh_nat_redirect ' |
+| src            | network as text     | source network (like: 'wan')                |
+| proto          | option as text      | selected protocols: tcp / udp / tcpudp      |
+| src_dport      | number              | external port (0 - 65535)                   |
+| dest_ip        | ip address as text  | private IP address of your target           |
+| dest_port      | number              | internal port (0 - 65535)                   |
+| target         | option as text      | target (like: 'DNAT')                       |
+| dest           | network as text     | destination network (like: 'lan')           |
 
 Dependencies
 ------------
@@ -58,6 +71,34 @@ Example Playbook
   }, {
     src: guest,
     dest: wan
+  }]
+  redirects: [{
+    name: my_tcpudp_rule,
+    src: wan,
+    proto: tcpudp,
+    src_dport: 2222,
+    dest_ip: 192.168.1.3,
+    dest_port: 22,
+    target: DNAT,
+    dest: lan
+  }, {
+    name: my_tcp_rule,
+    src: wan,
+    proto: tcp,
+    src_dport: 80,
+    dest_ip: 192.168.1.3,
+    dest_port: 80,
+    target: DNAT,
+    dest: lan
+  }, {
+    name: my_udp_rule,
+    src: wan,
+    proto: udp,
+    src_dport: 43210,
+    dest_ip: 192.168.1.3,
+    dest_port: 43210,
+    target: DNAT,
+    dest: lan
   }]
 ```
 

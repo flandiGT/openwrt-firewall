@@ -1,5 +1,5 @@
 ---
-- name: set firewall-zone src
+- name: set firewall-forwarding src
   uci:
     command: set
     config: "firewall"
@@ -11,7 +11,7 @@
     - uci commit firewall
     - reload network for openwrt-firewall
 
-- name: set firewall-zone dest
+- name: set firewall-forwarding dest
   uci:
     command: set
     config: "firewall"

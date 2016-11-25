@@ -17,3 +17,17 @@
     src: "{{item.1.src}}"
     dest: "{{item.1.dest}}"
   with_indexed_items: "{{forwardings}}"
+
+- name: set firewall-redirects
+  include: set_firewall_redirect.yml
+  vars:
+    index: "{{item.0}}"
+    name: "{{item.1.name}}"
+    src: "{{item.1.src}}"
+    proto: "{{item.1.proto}}"
+    src_dport: "{{item.1.src_dport}}"
+    dest_ip: "{{item.1.dest_ip}}"
+    dest_port: "{{item.1.dest_port}}"
+    target: "{{item.1.target}}"
+    dest: "{{item.1.dest}}"
+  with_indexed_items: "{{redirects}}"
