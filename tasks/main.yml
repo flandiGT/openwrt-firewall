@@ -31,3 +31,17 @@
     target: "{{item.1.target}}"
     dest: "{{item.1.dest}}"
   with_indexed_items: "{{redirects}}"
+
+- name: set firewall-rules
+  include: set_firewall_rule.yml
+  vars:
+    index: "{{item.1.index | default(item.0)}}"
+    name: "{{item.1.name}}"
+    family: "{{item.1.family | default({})}}"
+    src: "{{item.1.src | default({})}}"
+    src_ip: "{{item.1.src_ip | default({})}}"
+    dest: "{{item.1.dest | default({})}}"
+    dest_ip: "{{item.1.dest_ip | default({})}}"
+    target: "{{item.1.target}}"
+    enabled: "{{item.1.enabled | default(True)}}"
+  with_indexed_items: "{{rules}}"

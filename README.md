@@ -12,6 +12,7 @@ Role Variables
 | zones             | array of objects | see attributes below | <empty> |
 | forwardings       | array of objects | see attributes below | <empty> |
 | redirects         | array of objects | see attributes below | <empty> |
+| rules             | array of objects | see attributes below | <empty> |
 
 Role Variable elements
 ----------------------
@@ -46,6 +47,19 @@ firewall-redirect attributes
 | dest_port      | number              | internal port (0 - 65535)                   |
 | target         | option as text      | target (like: 'DNAT')                       |
 | dest           | network as text     | destination network (like: 'lan')           |
+
+firewall-rule attributes
+
+| attribute name | property type       | valid values / examples                     |
+|----------------|---------------------|---------------------------------------------|
+| name           | text                | rule name like 'my_custom_block_rule        |
+| family         | option as text      | ipv4/ipv6 or empty for both                 |
+| src            | network as text     | source network (blank for any)              |
+| src_ip         | ip address as text  | source ip address (blank for any)           |
+| dest           | network as text     | destination network (blank for any)         |
+| dest_ip        | ip address as text  | destination ip address (blank for any)      |
+| target         | option as text      | ACCEPT/REJECT/DROP                          |
+| enabled        | boolean             | True/False                                  |
 
 Dependencies
 ------------
@@ -99,6 +113,23 @@ Example Playbook
     dest_port: 43210,
     target: DNAT,
     dest: lan
+  }]
+  rules: [{
+    name: my_custom_forward_block,
+    family: ipv4,
+    src: lan,
+    dest: wan,
+    dest_ip: 82.165.230.17,
+    target: DROP,
+    enabled: True
+  }, {
+    name: my_custom_input_block,
+    family: ipv4,
+    src: wan,
+    src_ip: 82.165.230.17,
+    dest: lan,
+    target: DROP,
+    enabled: True
   }]
 ```
 
