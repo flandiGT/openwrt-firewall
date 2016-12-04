@@ -21,6 +21,7 @@ firewall-zone attributes:
 
 | attribute name | property type       | valid values / examples            |
 |----------------|---------------------|------------------------------------|
+| index          | number              | optional: index of the zone        |
 | name           | text                | zone name like 'zone-1' or 'guest' |
 | network        | text                | network name this zone belongs to  |
 | forward        | option as text      | ACCEPT/DROP/REJECT                 |
@@ -32,6 +33,7 @@ firewall-forwarding attributes:
 
 | attribute name | property type       | valid values / examples            |
 |----------------|---------------------|------------------------------------|
+| index          | number              | optional: index of the forwarding  |
 | src            | network as text     | source network name                |
 | dest           | network as text     | destination network name           |
 
@@ -39,6 +41,7 @@ firewall-redirect attributes
 
 | attribute name | property type       | valid values / examples                     |
 |----------------|---------------------|---------------------------------------------|
+| index          | number              | optional: index of the redirect             |
 | name           | text                | redirect role name like 'ssh_nat_redirect ' |
 | src            | network as text     | source network (like: 'wan')                |
 | proto          | option as text      | selected protocols: tcp / udp / tcpudp      |
@@ -52,6 +55,7 @@ firewall-rule attributes
 
 | attribute name | property type       | valid values / examples                     |
 |----------------|---------------------|---------------------------------------------|
+| index          | number              | optional: index of the rule                 |
 | name           | text                | rule name like 'my_custom_block_rule        |
 | family         | option as text      | ipv4/ipv6 or empty for both                 |
 | src            | network as text     | source network (blank for any)              |

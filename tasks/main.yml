@@ -2,18 +2,19 @@
 - name: set firewall-zones
   include: set_firewall_zone.yml
   vars:
-    name: "{{item.name}}"
-    network: "{{item.network}}"
-    forward: "{{item.forward | default({})}}"
-    input: "{{item.input | default({})}}"
-    output: "{{item.output | default({})}}"
-    masq: "{{item.masq | default({})}}"
-  with_items: "{{zones}}"
+    index: "{{item.1.index | default(item.0)}}"
+    name: "{{item.1.name | default(item.1.network)}}"
+    network: "{{item.1.network}}"
+    forward: "{{item.1.forward | default({})}}"
+    input: "{{item.1.input | default({})}}"
+    output: "{{item.1.output | default({})}}"
+    masq: "{{item.1.masq | default({})}}"
+  with_indexed_items: "{{zones}}"
 
 - name: set firewall-forwardings
   include: set_firewall_forwarding.yml
   vars:
-    index: "{{item.0}}"
+    index: "{{item.1.index | default(item.0)}}"
     src: "{{item.1.src}}"
     dest: "{{item.1.dest}}"
   with_indexed_items: "{{forwardings}}"
@@ -21,7 +22,7 @@
 - name: set firewall-redirects
   include: set_firewall_redirect.yml
   vars:
-    index: "{{item.0}}"
+    index: "{{item.1.index | default(item.0)}}"
     name: "{{item.1.name}}"
     src: "{{item.1.src}}"
     proto: "{{item.1.proto}}"
