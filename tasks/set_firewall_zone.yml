@@ -9,7 +9,7 @@
     value: "{{name}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-zone network
   uci:
@@ -21,7 +21,7 @@
     value: "{{network}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-zone forward
   uci:
@@ -34,7 +34,7 @@
   when: forward != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-zone input
   uci:
@@ -47,7 +47,7 @@
   when: input != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-zone output
   uci:
@@ -60,7 +60,7 @@
   when: output != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-zone output
   uci:
@@ -73,4 +73,4 @@
   when: masq != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall

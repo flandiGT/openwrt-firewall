@@ -60,8 +60,10 @@ firewall-rule attributes
 | family         | option as text      | ipv4/ipv6 or empty for both                 |
 | src            | network as text     | source network (blank for any)              |
 | src_ip         | ip address as text  | source ip address (blank for any)           |
+| src_port       | number              | source port (blank for any)                 |
 | dest           | network as text     | destination network (blank for any)         |
 | dest_ip        | ip address as text  | destination ip address (blank for any)      |
+| dest_port      | number              | destination port (blank for any)            |
 | target         | option as text      | ACCEPT/REJECT/DROP                          |
 | enabled        | boolean             | True/False                                  |
 

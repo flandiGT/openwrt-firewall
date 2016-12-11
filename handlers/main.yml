@@ -2,5 +2,5 @@
 - name: uci commit firewall
   uci: command=commit config=firewall
 
-- name: reload network for openwrt-firewall
-  raw: /etc/init.d/network reload
+- name: reload firewall
+  raw: /etc/init.d/firewall reload

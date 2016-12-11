@@ -9,7 +9,7 @@
     value: "{{name}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-rule family
   uci:
@@ -22,7 +22,7 @@
   when: family != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-rule src
   uci:
@@ -35,7 +35,7 @@
   when: src != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-rule src_ip
   uci:
@@ -48,7 +48,20 @@
   when: src_ip != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
+
+- name: set firewall-rule src_port
+  uci:
+    command: set
+    config: "firewall"
+    type: "rule"
+    index: "{{index}}"
+    option: "src_port"
+    value: "{{src_port}}"
+  when: src_port != {}
+  notify:
+    - uci commit firewall
+    - reload firewall
 
 - name: set firewall-rule dest
   uci:
@@ -61,7 +74,7 @@
   when: dest != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-rule dest_ip
   uci:
@@ -74,7 +87,20 @@
   when: dest_ip != {}
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
+
+- name: set firewall-rule dest_port
+  uci:
+    command: set
+    config: "firewall"
+    type: "rule"
+    index: "{{index}}"
+    option: "dest_port"
+    value: "{{dest_port}}"
+  when: dest_port != {}
+  notify:
+    - uci commit firewall
+    - reload firewall
 
 - name: set firewall-rule target
   uci:
@@ -86,7 +112,7 @@
     value: "{{target}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-rule enabled
   uci:
@@ -98,4 +124,4 @@
     value: "{{enabled | int}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall

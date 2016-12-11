@@ -9,7 +9,7 @@
     value: "{{name}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-redirect src
   uci:
@@ -21,7 +21,7 @@
     value: "{{src}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-redirect proto
   uci:
@@ -33,7 +33,7 @@
     value: "{{proto}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-redirect src_dport
   uci:
@@ -45,7 +45,7 @@
     value: "{{src_dport}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-redirect dest_ip
   uci:
@@ -57,7 +57,7 @@
     value: "{{dest_ip}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-redirect dest_port
   uci:
@@ -69,7 +69,7 @@
     value: "{{dest_port}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-redirect target
   uci:
@@ -81,7 +81,7 @@
     value: "{{target}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
 
 - name: set firewall-redirect dest
   uci:
@@ -93,4 +93,4 @@
     value: "{{dest}}"
   notify:
     - uci commit firewall
-    - reload network for openwrt-firewall
+    - reload firewall
