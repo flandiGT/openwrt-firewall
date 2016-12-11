@@ -48,3 +48,12 @@
     target: "{{item.1.target}}"
     enabled: "{{item.1.enabled | default(True)}}"
   with_indexed_items: "{{rules}}"
+
+- name: set custom_rules
+  include: set_custom_rule.yml
+  vars:
+    index: "{{item.1.index | default(item.0)}}"
+    name: "{{item.1.name | default({})}}"
+    content: "{{item.1.content | default({})}}"
+    reload: "{{item.1.reload | default({})}}"
+  with_indexed_items: "{{custom_rules}}"

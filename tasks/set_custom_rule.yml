@@ -1,0 +1,33 @@
+---
+- name: set custom_rule include content
+  template:
+    src: custom_rule.j2
+    dest: "/etc/firewall.{{name}}"
+  notify:
+    - uci commit firewall
+    - reload firewall
+
+- name: set custom_rule include path
+  uci:
+    command: set
+    config: "firewall"
+    type: "include"
+    index: "{{index}}"
+    option: "path"
+    value: "/etc/firewall.{{name}}"
+  notify:
+    - uci commit firewall
+    - reload firewall
+
+- name: set custom_rule include reload
+  uci:
+    command: set
+    config: "firewall"
+    type: "include"
+    index: "{{index}}"
+    option: "reload"
+    value: "{{reload | int}}"
+  when: reload != {}
+  notify:
+    - uci commit firewall
+    - reload firewall

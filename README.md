@@ -13,6 +13,7 @@ Role Variables
 | forwardings       | array of objects | see attributes below | <empty> |
 | redirects         | array of objects | see attributes below | <empty> |
 | rules             | array of objects | see attributes below | <empty> |
+| custom_rules      | array of objects | see attributes below | <empty> |
 
 Role Variable elements
 ----------------------
@@ -66,6 +67,15 @@ firewall-rule attributes
 | dest_port      | number              | destination port (blank for any)            |
 | target         | option as text      | ACCEPT/REJECT/DROP                          |
 | enabled        | boolean             | True/False                                  |
+
+firewall-custom-rule attributes
+
+| attribute name | property type       | valid values / examples                                         |
+|----------------|---------------------|-----------------------------------------------------------------|
+| index          | number              | optional: index of the  custom rule                             |
+| name           | text                | rule name, used for file name (do not use spaces, slashes etc.) |
+| content        | text                | shell script content                                            |
+| reload         | boolean             | True/False                                                      |
 
 Dependencies
 ------------
@@ -137,6 +147,10 @@ Example Playbook
     target: DROP,
     enabled: True
   }]
+  custom_rules:
+    - name: my_custom_rule
+      content: "{{ lookup('file', './iptables/my_custom_iptables_script') }}"
+      reload: True
 ```
 
 [http://wiki.openwrt.org/doc/uci/wireless]: http://wiki.openwrt.org/doc/uci/firewall
