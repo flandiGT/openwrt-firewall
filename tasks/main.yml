@@ -31,6 +31,7 @@
     dest_port: "{{item.1.dest_port}}"
     target: "{{item.1.target}}"
     dest: "{{item.1.dest}}"
+    enabled: "{{item.1.enabled | default({})}}"
   with_indexed_items: "{{redirects}}"
 
 - name: set firewall-rules

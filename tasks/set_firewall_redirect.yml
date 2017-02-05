@@ -94,3 +94,16 @@
   notify:
     - uci commit firewall
     - reload firewall
+
+- name: set firewall-redirect enabled
+  uci:
+    command: set
+    config: "firewall"
+    index: "{{index}}"
+    option: "enabled"
+    type: "redirect"
+    value: "{{enabled | int}}"
+  when: enabled != {}
+  notify:
+    - uci commit firewall
+    - reload firewall
