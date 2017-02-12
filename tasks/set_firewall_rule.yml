@@ -125,3 +125,16 @@
   notify:
     - uci commit firewall
     - reload firewall
+
+- name: set firewall-rule icmp_type
+  uci:
+    command: set
+    config: "firewall"
+    type: "rule"
+    index: "{{index}}"
+    option: "icmp_type"
+    value: "{{icmp_type}}"
+  when: icmp_type != {}
+  notify:
+    - uci commit firewall
+    - reload firewall

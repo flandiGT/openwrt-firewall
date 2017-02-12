@@ -48,6 +48,7 @@
     dest_port: "{{item.1.dest_port | default({})}}"
     target: "{{item.1.target}}"
     enabled: "{{item.1.enabled | default(True)}}"
+    icmp_type: "{{item.1.icmp_type | default({})}}"
   with_indexed_items: "{{rules}}"
 
 - name: set custom_rules
