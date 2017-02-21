@@ -1,55 +1,79 @@
 ---
 - name: set firewall-zones
-  include: set_firewall_zone.yml
-  vars:
+  uci:
+    command: set_object
+    config: firewall
+    type: zone
     index: "{{item.1.index | default(item.0)}}"
-    name: "{{item.1.name | default(item.1.network)}}"
-    network: "{{item.1.network}}"
-    forward: "{{item.1.forward | default({})}}"
-    input: "{{item.1.input | default({})}}"
-    output: "{{item.1.output | default({})}}"
-    masq: "{{item.1.masq | default({})}}"
+    values:
+      name: "{{item.1.name | default(item.1.network)}}"
+      network: "{{item.1.network}}"
+      forward: "{{item.1.forward | default(None)}}"
+      input: "{{item.1.input | default(None)}}"
+      output: "{{item.1.output | default(None)}}"
+      masq: "{{item.1.masq | default(None) | int(None)}}"
   with_indexed_items: "{{zones}}"
+  notify:
+    - uci commit firewall
+    - reload firewall
 
 - name: set firewall-forwardings
-  include: set_firewall_forwarding.yml
-  vars:
+  uci:
+    command: set_object
+    config: firewall
+    type: forwarding
     index: "{{item.1.index | default(item.0)}}"
-    src: "{{item.1.src}}"
-    dest: "{{item.1.dest}}"
+    values:
+      src: "{{item.1.src}}"
+      dest: "{{item.1.dest}}"
   with_indexed_items: "{{forwardings}}"
+  notify:
+    - uci commit firewall
+    - reload firewall
 
 - name: set firewall-redirects
-  include: set_firewall_redirect.yml
-  vars:
+  uci:
+    command: set_object
+    config: firewall
+    type: redirect
     index: "{{item.1.index | default(item.0)}}"
-    name: "{{item.1.name}}"
-    src: "{{item.1.src}}"
-    proto: "{{item.1.proto}}"
-    src_dport: "{{item.1.src_dport}}"
-    dest_ip: "{{item.1.dest_ip}}"
-    dest_port: "{{item.1.dest_port}}"
-    target: "{{item.1.target}}"
-    dest: "{{item.1.dest}}"
-    enabled: "{{item.1.enabled | default({})}}"
+    values:
+      name: "{{item.1.name}}"
+      src: "{{item.1.src}}"
+      proto: "{{item.1.proto}}"
+      src_dport: "{{item.1.src_dport}}"
+      dest_ip: "{{item.1.dest_ip}}"
+      dest_port: "{{item.1.dest_port}}"
+      target: "{{item.1.target}}"
+      dest: "{{item.1.dest}}"
+      enabled: "{{item.1.enabled | default(None) | int(None)}}"
   with_indexed_items: "{{redirects}}"
+  notify:
+    - uci commit firewall
+    - reload firewall
 
 - name: set firewall-rules
-  include: set_firewall_rule.yml
-  vars:
+  uci:
+    command: set_object
+    config: firewall
+    type: rule
     index: "{{item.1.index | default(item.0)}}"
-    name: "{{item.1.name}}"
-    family: "{{item.1.family | default({})}}"
-    src: "{{item.1.src | default({})}}"
-    src_ip: "{{item.1.src_ip | default({})}}"
-    src_port: "{{item.1.src_port | default({})}}"
-    dest: "{{item.1.dest | default({})}}"
-    dest_ip: "{{item.1.dest_ip | default({})}}"
-    dest_port: "{{item.1.dest_port | default({})}}"
-    target: "{{item.1.target}}"
-    enabled: "{{item.1.enabled | default(True)}}"
-    icmp_type: "{{item.1.icmp_type | default({})}}"
+    values:
+      name: "{{item.1.name}}"
+      family: "{{item.1.family | default(None)}}"
+      src: "{{item.1.src | default(None)}}"
+      src_ip: "{{item.1.src_ip | default(None)}}"
+      src_port: "{{item.1.src_port | default(None)}}"
+      dest: "{{item.1.dest | default(None)}}"
+      dest_ip: "{{item.1.dest_ip | default(None)}}"
+      dest_port: "{{item.1.dest_port | default(None)}}"
+      target: "{{item.1.target}}"
+      enabled: "{{item.1.enabled | default(True) | int(None)}}"
+      icmp_type: "{{item.1.icmp_type | default(None)}}"
   with_indexed_items: "{{rules}}"
+  notify:
+    - uci commit firewall
+    - reload firewall
 
 - name: set custom_rules
   include: set_custom_rule.yml

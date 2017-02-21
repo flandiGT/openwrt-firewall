@@ -7,27 +7,15 @@
     - uci commit firewall
     - reload firewall
 
-- name: set custom_rule include path
+- name: set firewall-custom-rules
   uci:
-    command: set
-    config: "firewall"
-    type: "include"
+    command: set_object
+    config: firewall
+    type: include
     index: "{{index}}"
-    option: "path"
-    value: "/etc/firewall.{{name}}"
-  notify:
-    - uci commit firewall
-    - reload firewall
-
-- name: set custom_rule include reload
-  uci:
-    command: set
-    config: "firewall"
-    type: "include"
-    index: "{{index}}"
-    option: "reload"
-    value: "{{reload | int}}"
-  when: reload != {}
+    values:
+      path: "/etc/firewall.{{name}}"
+      reload: "{{reload | int(None)}}"
   notify:
     - uci commit firewall
     - reload firewall
