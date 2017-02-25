@@ -15,7 +15,7 @@
     index: "{{index}}"
     values:
       path: "/etc/firewall.{{name}}"
-      reload: "{{reload | int(None)}}"
+      reload: "{{ reload | int(None) }}"
   notify:
     - uci commit firewall
     - reload firewall
