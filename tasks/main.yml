@@ -12,6 +12,8 @@
       input: "{{ item.1.input | default(None) }}"
       output: "{{ item.1.output | default(None) }}"
       masq: "{{ item.1.masq | default(None) | int(None) }}"
+      syn_flood: "{{ item.1.syn_flood | default(None) | int(None) }}"
+      conntrack: "{{ item.1.conntrack | default(None) | int(None) }}"
   with_indexed_items: "{{ zones }}"
   notify:
     - uci commit firewall

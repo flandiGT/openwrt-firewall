@@ -35,6 +35,8 @@ firewall-zone attributes:
 | input          | option as text      | ACCEPT/DROP/REJECT                 |
 | output         | option as text      | ACCEPT/DROP/REJECT                 |
 | masq           | boolean             | True/False                         |
+| syn_flood      | boolean             | True/False                         |
+| conntrack      | boolean             | True/False                         |
 
 firewall-forwarding attributes:
 
